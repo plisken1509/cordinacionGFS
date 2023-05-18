@@ -17,7 +17,7 @@
 <div class="overlay-navigation">
   <nav role="navigation">
     <ul>
-      <li><a href="principalC.php" data-content="Estadisticas">Principal</a></li>
+      <li><a href="../principalC.php" data-content="Estadisticas">Principal</a></li>
       <li><a href="../admin/visitas.php" data-content="Listar evidencias">Evidencias</a></li>
       <li><a href="../admin/listarvisitas.php" data-content="Evidencias">Listado</a></li>
       <li><a href="../admin/reporte.php" data-content="Excel">Reporte</a></li>
