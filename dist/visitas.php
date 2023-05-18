@@ -11,6 +11,9 @@ if (isset($_POST['enviar'])) {
     $fecha=$_POST['fecha'];
     $query="insert into visitas values(0,'$usuId','$comedor','$fecha','EN PROCESO')";
     $enviar=mysqli_query($db,$query);
+    echo"<script>
+                        window.location = 'visitas.php';
+                      </script>";
 }
  ?>
  <!DOCTYPE html>
