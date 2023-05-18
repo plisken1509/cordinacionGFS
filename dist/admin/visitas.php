@@ -24,13 +24,14 @@ session_start();
     $enviar=mysqli_query($db,$query);
     $ver=mysqli_fetch_array($enviar);
     echo "<center><h1>Listado de Visitas</h1></center>";
+    echo "  <a class='btn btn-primary' href='exportar_excel.php'>Exportar</a>";
     echo "<div class=container><center><table class=table >
         <thead>
     <tr>
       <th scope=col>ID</th>
       <th scope=col>Comedor</th>
       <th scope=col>Empleado</th>
-      <th scope=col>Fecha</th>
+      <th scope=col>Empleado</th>
       <th scope=col>Estado</th>
       <th scope=col>Accion</th>
     </tr>
