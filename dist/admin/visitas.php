@@ -20,7 +20,7 @@ session_start();
     </script>
 
 <?php
-    $query="select *,v.estado as vestado,v.id as vid from visitas v,comedor c where v.comId=c.id";
+    $query="select c.nombre,v.fecha,e.ruta,v.estado as vestado,emp.nombre as cliente,v.id as vid from visitas v,comedor c, evidencias e, empleados emp where v.comId=c.id and e.visId=v.id and emp.id=v.empId";
     $enviar=mysqli_query($db,$query);
     $ver=mysqli_fetch_array($enviar);
     echo "<center><h1>Listado de Visitas</h1></center>";
@@ -29,9 +29,9 @@ session_start();
     <tr>
       <th scope=col>ID</th>
       <th scope=col>Comedor</th>
+      <th scope=col>Empleado</th>
       <th scope=col>Fecha</th>
       <th scope=col>Estado</th>
-      <th scope=col>Evidencia</th>
       <th scope=col>Accion</th>
     </tr>
   </thead>";
@@ -40,47 +40,28 @@ session_start();
     $nombre=$ver['nombre'];
     $fecha=$ver['fecha'];
     $estado=$ver['vestado'];
+    $ruta=$ver['ruta'];
+    $cliente=$ver['cliente'];
     $query2="select * from visitas where id=$id and estado='Completo'";
+    
     $enviar2=mysqli_query($db,$query2);
     $ver2=mysqli_num_rows($enviar2);
 
   
-    if($ver2>0){
+    
         echo '
         <tbody>
         <tr>
         <td>'.$id.'</td>
         <td>'.$nombre.'</td>
+        <td>'.$cliente.'</td>
         <td>'.$fecha.'</td>
         <td>'.$estado.'</td>
-        <td>Completo
-                        </td>
-        <td><a href="eliminarCategoria.php?id='.$id.'"><input type="button" value="Eliminar" name="Eliminar"class="btn btn-sm btn-danger" onclick="return ConfirmarEliminar()"></a>
+        <td><a class="btn" href="../'.$ruta.'" target="_BLANK">Descargar</a>
         </td>
         </tr>
 
     ';
-    }else{
-        echo '
-        <tbody>
-        <tr>
-        <td>'.$id.'</td>
-        <td>'.$nombre.'</td>
-        <td>'.$fecha.'</td>
-        <td>'.$estado.'</td>
-        <td><form name="form1" id="form1" method="post" action="guardarEvidencias.php" enctype="multipart/form-data">
-                            <center>
-                            <input type="hidden" class="form-control"style="width:200px;" name="id" value="'.$id.'">
-                                <input type="file" class="form-control" id="archivo[]" name="archivo[]" multiple="" style="width:200px;">
-                                <button type="submit" class="btn btn-primary" style="white-space: nowrap;">Cargar</button>
-                            </center>                            
-            </form>
-                        </td>
-        <td><a href="eliminarCategoria.php?id='.$id.'"><input type="button" value="Eliminar" name="Eliminar"class="btn btn-sm btn-danger" onclick="return ConfirmarEliminar()"></a>
-        </td>
-        </tr>
-    ';
-    }
     
     }while ($ver=mysqli_fetch_array($enviar)); 
         echo '</tbody></table></center></div>';
