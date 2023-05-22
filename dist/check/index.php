@@ -1,3 +1,7 @@
+<?php 
+include('../conexion/conexion.php');
+ ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,10 +35,25 @@
           <br><br><br>
             <h3 class="text-center">Check List Control del Comedor</h3>
             <form method="POST" action="guardar.php" enctype="multipart/form-data" id="usrform">
-            <!-- select tipo solicitud -->
             <div class="row">
                 <div class="col-md-12 form-group mb-3">
-                <label for="budget" class="col-form-label">Uniforme y comportamiento del personal</label>
+                
+                <div class="alert alert-primary" role="alert">
+  Comedor
+  <select class="form-control" name="comedor" id="comedor">
+       <option>Seleccione Comedor</option>
+        <?php
+        $querry="select * from comedor";
+$enviar=mysqli_query($db,$querry);
+$ver=mysqli_fetch_array($enviar);
+        do {
+          $id=$ver['id'];
+           $nombre=$ver['nombre'];
+           echo "<option value='$id'>$nombre</option>";
+         } while ($ver=mysqli_fetch_array($enviar)); 
+ ?>
+      </select>
+</div>
                 <select class="form-control" name="solicitud" required>
                     <option disabled="disabled" selected="selected" value="">Elija:</option>
                     <option value="SI">SI</option>
@@ -44,14 +63,34 @@
                 </div>
                 <form method='post' action='' enctype="multipart/form-data">
    <input type="file" id='files' name="files[]" multiple><br>
-   <input type="button" id="submit" value='Upload'>
+   
+</form>
+            </div>    
+            <!-- select tipo solicitud -->
+            <div class="row">
+                <div class="col-md-12 form-group mb-3">
+                
+                <div class="alert alert-primary" role="alert">
+  Uniforme y comportamiento del personal
+</div>
+                <select class="form-control" name="solicitud" required>
+                    <option disabled="disabled" selected="selected" value="">Elija:</option>
+                    <option value="SI">SI</option>
+                    <option value="NO">NO</option>
+                </select>
+                
+                </div>
+                <form method='post' action='' enctype="multipart/form-data">
+   <input type="file" id='files' name="files[]" multiple><br>
+   
 </form>
             </div>
             <!-- FIN select tipo solicitud -->
               <!-- select tipo solicitud -->
             <div class="row">
                 <div class="col-md-12 form-group mb-3">
-                <label for="budget" class="col-form-label">Instalaciones</label>
+                <div class="alert alert-primary" role="alert">
+Instalaciones</div>
                 <select class="form-control" name="solicitud" required>
                     <option disabled="disabled" selected="selected" value="">Elija:</option>
                     <option value="SI">SI</option>
@@ -60,14 +99,17 @@
                 </div>
                 <form method='post' action='' enctype="multipart/form-data">
    <input type="file" id='files' name="files[]" multiple><br>
-   <input type="button" id="submit" value='Upload'>
+   
 </form>
             </div>
             <!-- FIN select tipo solicitud -->
            <!-- select tipo solicitud -->
            <div class="row">
                 <div class="col-md-12 form-group mb-3">
-                <label for="budget" class="col-form-label">Almacenamiento de alimentos</label>
+                    <div class="alert alert-primary" role="alert">
+  Almacenamiento de alimentos
+</div>
+               
                 <select class="form-control" name="solicitud" required>
                     <option disabled="disabled" selected="selected" value="">Elija:</option>
                     <option value="SI">SI</option>
@@ -76,7 +118,7 @@
                 </div>
                 <form method='post' action='' enctype="multipart/form-data">
    <input type="file" id='files' name="files[]" multiple><br>
-   <input type="button" id="submit" value='Upload'>
+
 </form>
             </div>
             
@@ -84,7 +126,10 @@
             <!-- select tipo solicitud -->
            <div class="row">
                 <div class="col-md-12 form-group mb-3">
-                <label for="budget" class="col-form-label">Operaciones de producción</label>
+                    <div class="alert alert-primary" role="alert">
+  Operaciones de producción
+</div>
+                
                 <select class="form-control" name="solicitud" required>
                     <option disabled="disabled" selected="selected" value="">Elija:</option>
                     <option value="SI">SI</option>
@@ -93,7 +138,7 @@
                 </div>
                 <form method='post' action='' enctype="multipart/form-data">
    <input type="file" id='files' name="files[]" multiple><br>
-   <input type="button" id="submit" value='Upload'>
+
 </form>
             </div>
             
@@ -101,7 +146,9 @@
              <!-- select tipo solicitud -->
            <div class="row">
                 <div class="col-md-12 form-group mb-3">
-                <label for="budget" class="col-form-label">Controles de limpieza</label>
+                <div class="alert alert-primary" role="alert">
+  Controles de Limpieza
+</div>
                 <select class="form-control" name="solicitud" required>
                     <option disabled="disabled" selected="selected" value="">Elija:</option>
                     <option value="SI">SI</option>
@@ -110,7 +157,7 @@
                 </div>
                 <form method='post' action='' enctype="multipart/form-data">
    <input type="file" id='files' name="files[]" multiple><br>
-   <input type="button" id="submit" value='Upload'>
+ 
 </form>
             </div>
             
@@ -118,8 +165,9 @@
             <!-- select tipo solicitud -->
            <div class="row">
                 <div class="col-md-12 form-group mb-3">
-                <label for="budget" class="col-form-label">Desechos líquidos y sólidos.</label>
-                <select class="form-control" name="solicitud" required>
+                <div class="alert alert-primary" role="alert">
+  Operaciones de producción
+Desechos líquidos y sólidos</div>                <select class="form-control" name="solicitud" required>
                     <option disabled="disabled" selected="selected" value="">Elija:</option>
                     <option value="SI">SI</option>
                     <option value="NO">NO</option>
@@ -127,12 +175,14 @@
                 </div>
                 <form method='post' action='' enctype="multipart/form-data">
    <input type="file" id='files' name="files[]" multiple><br>
-   <input type="button" id="submit" value='Upload'>
+  
 </form>
             </div>            
             <!-- FIN select tipo solicitud -->
               <div class="mb-3" id="carga" style="display: none;">
-                            <label for="formFile" class="form-label">Cargar el arhivo de la novedad:</label>
+                           <div class="alert alert-primary" role="alert">
+  Archivo de Novedades
+</div>
                             <input class="form-control" name="archivo" type="file" id="formFile" accept="image/*">
                           </div>
               <div class="row justify-content-center">

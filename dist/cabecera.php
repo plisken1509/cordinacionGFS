@@ -20,7 +20,7 @@
       <li><a href="principalC.php" data-content="Estadisticas">Principal</a></li>
       <li><a href="visitas.php" data-content="Ingreso de visitas">Asignación</a></li>
       <li><a href="../dist/listarvisitas.php" data-content="Evidencias">Listado</a></li>
-      <li><a href="../dist/admin/reporte.php" data-content="Excel">Reporte</a></li>
+      <li><a href="../dist/check" data-content="Informe de visita" target="_blank">Auditoria</a></li>
       <li><a href="salir.php" data-content="Cuidate">Salir</a></li>
     </ul>
   </nav>

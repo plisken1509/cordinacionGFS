@@ -2,6 +2,7 @@
 include('conexion/conexion.php');
 include('cabecera.php');
 session_start();
+$idusu=$_SESSION['usuarioId'];
  ?>
 
     <script type="text/javascript">
@@ -20,14 +21,18 @@ session_start();
     </script>
 
 <?php
-    $query="select *,v.estado as vestado,v.id as vid from visitas v,comedor c where v.comId=c.id";
+    $query="select *,v.estado as vestado,v.id as vid,e.nombre as enombre,c.nombre as cnombre from visitas v,comedor c,empleados e where v.comId=c.id and v.empId=e.id and e.id=$idusu";
+   // echo $query;
     $enviar=mysqli_query($db,$query);
-    $ver=mysqli_fetch_array($enviar);
+    $contar1=mysqli_num_rows($enviar);
+    if ($contar1>0) {
+        $ver=mysqli_fetch_array($enviar);
     echo "<center><h1>Listado de Visitas</h1></center>";
     echo "<div class=container><center><table class=table >
         <thead>
     <tr>
       <th scope=col>ID</th>
+      <th scope=col>Usuario</th>
       <th scope=col>Comedor</th>
       <th scope=col>Fecha</th>
       <th scope=col>Estado</th>
@@ -37,7 +42,8 @@ session_start();
   </thead>";
     do{
     $id=$ver['vid'];
-    $nombre=$ver['nombre'];
+    $enombre=$ver['enombre'];
+    $nombre=$ver['cnombre'];
     $fecha=$ver['fecha'];
     $estado=$ver['vestado'];
     $query2="select * from visitas where id=$id and estado='Completo'";
@@ -50,12 +56,13 @@ session_start();
         <tbody>
         <tr>
         <td>'.$id.'</td>
+        <td>'.$enombre.'</td>
         <td>'.$nombre.'</td>
         <td>'.$fecha.'</td>
         <td>'.$estado.'</td>
         <td>Completo
                         </td>
-        <td><a href="eliminarCategoria.php?id='.$id.'"><input type="button" value="Eliminar" name="Eliminar"class="btn btn-sm btn-danger" onclick="return ConfirmarEliminar()"></a>
+        <td>
         </td>
         </tr>
 
@@ -65,6 +72,7 @@ session_start();
         <tbody>
         <tr>
         <td>'.$id.'</td>
+        <td>'.$enombre.'</td>
         <td>'.$nombre.'</td>
         <td>'.$fecha.'</td>
         <td>'.$estado.'</td>
@@ -76,13 +84,28 @@ session_start();
                             </center>                            
             </form>
                         </td>
-        <td><a href="eliminarCategoria.php?id='.$id.'"><input type="button" value="Eliminar" name="Eliminar"class="btn btn-sm btn-danger" onclick="return ConfirmarEliminar()"></a>
+        <td>
         </td>
         </tr>
     ';
     }
     
     }while ($ver=mysqli_fetch_array($enviar)); 
-        echo '</tbody></table></center></div>';
+        echo '</tbody></table></center></div>';    
+    }else{
+        echo "<center><h1>Listado de Visitas</h1></center>";
+    echo "<div class=container><center><table class=table >
+        <thead>
+    <tr>
+      <th scope=col>ID</th>
+      <th scope=col>Usuario</th>
+      <th scope=col>Comedor</th>
+      <th scope=col>Fecha</th>
+      <th scope=col>Estado</th>
+      <th scope=col>Evidencia</th>
+      <th scope=col>Accion</th>
+    </tr>
+  </thead>";
+    }
 ?>
 
