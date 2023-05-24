@@ -8,7 +8,13 @@ $idusu=$_SESSION['usuarioId'];
     <script type="text/javascript">
         function ConfirmarEliminar()
         {
-            var respuesta= confirm("Esta seguro de Eliminar La Categoria");
+            var observacion=document.getElementById("observacion").value;
+            if (observacion=="") 
+            {
+                alert("Ingrese el morivo de la cancelacion");
+                return false;
+            }else{
+             var respuesta= confirm("Esta seguro de cancelar la Visita");
             if(respuesta==true)
             {
                 return true;
@@ -16,7 +22,9 @@ $idusu=$_SESSION['usuarioId'];
             else
             {
                 return false;
+            }   
             }
+            
         }
     </script>
 
@@ -46,7 +54,7 @@ $idusu=$_SESSION['usuarioId'];
     $nombre=$ver['cnombre'];
     $fecha=$ver['fecha'];
     $estado=$ver['vestado'];
-    $query2="select * from visitas where id=$id and estado='Completo'";
+    $query2="select * from visitas where id=$id and estado='COMPLETO'";
     $enviar2=mysqli_query($db,$query2);
     $ver2=mysqli_num_rows($enviar2);
 
@@ -68,6 +76,12 @@ $idusu=$_SESSION['usuarioId'];
 
     ';
     }else{
+        $query21="select * from visitas where id=$id and estado='EN PROCESO'";
+    $enviar21=mysqli_query($db,$query21);
+    $ver21=mysqli_num_rows($enviar21);
+
+  
+    if($ver21>0){
         echo '
         <tbody>
         <tr>
@@ -84,10 +98,37 @@ $idusu=$_SESSION['usuarioId'];
                             </center>                            
             </form>
                         </td>
-        <td>
+        
+        <td><form name="form1" id="form1" method="post" action="cancelarVisita.php" >
+                            <center>
+                            <input type="hidden" class="form-control"style="width:200px;" name="id" value="'.$id.'">
+                            <input type="text" class="form-control" name="observacion" id="observacion" requiered>
+                            <a href="cancelarVisita.php?id='.$id.'"><input type="submit" value="Cancelar" name="Eliminar"class="btn btn-sm btn-danger" onclick="return ConfirmarEliminar()"></a>
+                                                       
+            </form>
+            </center> 
         </td>
         </tr>
     ';
+       
+    }else{
+         echo '
+        <tbody>
+        <tr style="background-color: red;">
+        <td>'.$id.'</td>
+        <td>'.$enombre.'</td>
+        <td>'.$nombre.'</td>
+        <td>'.$fecha.'</td>
+        <td>'.$estado.'</td>
+        <td>Cancelado
+                        </td>
+        <td>
+        </td>
+        </tr>
+
+    ';
+    }
+        
     }
     
     }while ($ver=mysqli_fetch_array($enviar)); 
